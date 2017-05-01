@@ -18,11 +18,11 @@ def get_commits(data):
             details = data[row_index + 1].split('|')
             # Create a dictionary object to assign each of the values
             commit = {'Revision': details[0].strip(),
-            'Author': details[1].strip(),
-            'Date': details[2].strip().split(' ')[0],
-            'Time': details[2].strip().split(' ')[1],
-            'Number of lines': details[3].strip().split(' ')[0],
-            'Comment': data[row_index+2:data.index('',row_index+1)]}
+            'author': details[1].strip(),
+            'date': details[2].strip().split(' ')[0],
+            'time': details[2].strip().split(' ')[1],
+            'number of lines': details[3].strip().split(' ')[0],
+            'comment': data[row_index+2:data.index('',row_index+1)]}
 
             # Add the commit object to the commits array
             commits.append(commit)
@@ -31,21 +31,43 @@ def get_commits(data):
         except: # This except line is for the index out of range error that will happen at the end of the file. Expected error
             break
     return commits
-    
+
+# Create an empty array for authors
+
+
+
+
+   
 if __name__ == '__main__':
     # open the file - and read all of the lines.
     changes_file = 'changes_python.log'
     data = read_file(changes_file)
     commits = get_commits(data)
 
+
+    
 # Statistical conclusion #1: There are a total of 422 commits as part of the file
 number_of_commits = str(len(commits))
 print 'There are:',number_of_commits,'commits in the file'
 
-# Statistical conclusion #2:
-print (commits[1]['Author'])
+# Statistical conclusion #2: How many commits were there per author
+authors = {}
+for commit in commits:
+	author = commit['author']
+	if commit['author'] not in authors:
+		authors[author] = 1
+	else:
+		authors[author] = authors[author] + 1
 
+print authors
 
+# Statistical conclusion #3: How many commits were there per day
+dates = {}
+for commit in commits:
+	date = commit['date']
+	if commit['date'] not in dates:
+		dates[date] = 1
+	else:
+		dates[date] = dates[date] + 1
 
-
-
+print dates
