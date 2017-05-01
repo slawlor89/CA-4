@@ -19,7 +19,16 @@ separator = 72*'-'
 commits = []
 # Then lets start with a row index of zero which we will use to work through the file
 row_index = 0
-# Lets find the first row in the file and read into an object
-first_line = data[row_index + 1]
-# Print the first line to ensure that this is working correctly
-print first_line
+# Find the first line in the file and split out based on the pipe delimeter
+details = data[row_index + 1].split('|')
+# Create a dictionary object to assign each of the values
+commit = {'Revision': details[0].strip(),
+          'Author': details[1].strip(),
+          'Date': details[2].strip(),
+          'Number of lines': details[3].strip().split(' ')[0]}
+
+# Add the commit object to the commits array
+commits.append(commit)
+
+# Print the commits array to ensure that it is working correctly
+print commits
