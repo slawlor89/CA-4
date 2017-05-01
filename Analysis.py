@@ -15,3 +15,11 @@ print (len(data))
 # Create an opject called separator to define 72 hyphens
 separator = 72*'-'
 
+# Let's create an array which will start off as blank
+commits = []
+# Then lets start with a row index of zero which we will use to work through the file
+row_index = 0
+# Lets find the first row in the file and read into an object
+first_line = data[row_index + 1]
+# Print the first line to ensure that this is working correctly
+print first_line
