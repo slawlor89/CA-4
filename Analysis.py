@@ -19,16 +19,23 @@ separator = 72*'-'
 commits = []
 # Then lets start with a row index of zero which we will use to work through the file
 row_index = 0
-# Find the first line in the file and split out based on the pipe delimeter
-details = data[row_index + 1].split('|')
-# Create a dictionary object to assign each of the values
-commit = {'Revision': details[0].strip(),
-          'Author': details[1].strip(),
-          'Date': details[2].strip(),
-          'Number of lines': details[3].strip().split(' ')[0]}
 
-# Add the commit object to the commits array
-commits.append(commit)
+while row_index < len(data):
+    try:
+        # Find the first line in the file and split out based on the pipe delimeter
+        details = data[row_index + 1].split('|')
+        # Create a dictionary object to assign each of the values
+        commit = {'Revision': details[0].strip(),'Author': details[1].strip(),'Date': details[2].strip().split(' ')[0],'Time': details[2].strip().split(' ')[1],'Number of lines': details[3].strip().split(' ')[0]}
 
-# Print the commits array to ensure that it is working correctly
-print commits
+        # Add the commit object to the commits array
+        commits.append(commit)
+        # Update the index
+        row_index = data.index(separator, row_index + 1)
+    except: # This except line is for the index out of range error that will happen at the end of the file. Expected error
+        break
+
+# Print the number of commits        
+print len(commits)
+
+
+
