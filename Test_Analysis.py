@@ -18,6 +18,15 @@ class TestCommits(unittest.TestCase):
 
 	def test_first_commit(self):
 		commits = get_commits(self.data)
+		self.assertEqual('r1551925', commits[0]['revision'])
+		self.assertEqual('Thomas', commits[0]['author']) # Complete this for all elements to be complete
+		self.assertEqual('2015-11-27', commits[0]['date'])
+		self.assertEqual('16:57:44', commits[0]['time'])
+		self.assertEqual('1', commits[0]['number of lines'])
+				
+		
+	def test_first_author(self):
+		commits = get_commits(self.data)
 		self.assertEqual('Thomas', commits[0]['author'])
 		self.assertEqual('r1551925', commits[0]['revision'])
 
