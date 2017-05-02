@@ -34,6 +34,28 @@ def get_commits(data):
 
 # Define a function to get the list of authors and their number of updates
 def get_authors(data):
+	separator = 72*'-'
+	commits = []
+	row_index = 0
+	while row_index < len(data):
+		try:
+			# Find the first line in the file and split out based on the pipe delimeter
+			details = data[row_index + 1].split('|')
+			# Create a dictionary object to assign each of the values			
+			commit = {'revision': details[0].strip(),
+			'author': details[1].strip(),
+			'date': details[2].strip().split(' ')[0],
+			'time': details[2].strip().split(' ')[1],
+			'number of lines': details[3].strip().split(' ')[0],
+			'comment': data[row_index+2:data.index('',row_index+1)]}
+
+			# Add the commit object to the commits array
+			commits.append(commit)
+			# Update the index
+			row_index = data.index(separator, row_index + 1) # Search for the separator from the current index plus one
+		except IndexError: # This except line is for the index out of range error that will happen at the end of the file. Expected error
+			break
+	
 	authors = {}
 	for commit in commits:
 		author = commit['author']
@@ -45,6 +67,28 @@ def get_authors(data):
 	return authors
  
 def get_dates(data):
+	separator = 72*'-'
+	commits = []
+	row_index = 0
+	while row_index < len(data):
+		try:
+			# Find the first line in the file and split out based on the pipe delimeter
+			details = data[row_index + 1].split('|')
+			# Create a dictionary object to assign each of the values			
+			commit = {'revision': details[0].strip(),
+			'author': details[1].strip(),
+			'date': details[2].strip().split(' ')[0],
+			'time': details[2].strip().split(' ')[1],
+			'number of lines': details[3].strip().split(' ')[0],
+			'comment': data[row_index+2:data.index('',row_index+1)]}
+
+			# Add the commit object to the commits array
+			commits.append(commit)
+			# Update the index
+			row_index = data.index(separator, row_index + 1) # Search for the separator from the current index plus one
+		except IndexError: # This except line is for the index out of range error that will happen at the end of the file. Expected error
+			break
+	
 	dates = {}
 	for commit in commits:
 		date = commit['date']
@@ -60,8 +104,6 @@ if __name__ == '__main__':
 	changes_file = 'changes_python.log'
 	data = read_file(changes_file)
 	commits = get_commits(data)
-
-
     
 	# Statistical conclusion #1: There are a total of 422 commits as part of the file
 	number_of_commits = len(commits)
