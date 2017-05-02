@@ -1,6 +1,9 @@
 # Student number: 10354686
 # CA 4
 
+# Import the csv capability
+import csv
+
 # Define a function to read in the file and strip into lines
 def read_file(changes_file):
     # Read in the file and remove any spaces from each of the lines
@@ -112,7 +115,17 @@ if __name__ == '__main__':
 	# Statistical conclusion #2: How many commits were there per author
 	authors = get_authors(data)
 	print 'The following is the list of authors and number of commits:\n',authors
+	# Create a csv file with the authors dictionary
+	with open('get_authors.csv', 'wb') as f:
+		w = csv.DictWriter(f, authors.keys())
+		w.writeheader()
+		w.writerow(authors)
 
 	# Statistical conclusion #3: How many commits were there per day
 	dates = get_dates(data)
 	print 'The following is the list of dates and number of commits:\n',dates
+	# Create a csv file with the dates dictionary
+	with open('get_dates.csv', 'wb') as f:
+		w = csv.DictWriter(f, dates.keys())
+		w.writeheader()
+		w.writerow(dates)
