@@ -17,7 +17,12 @@ def get_commits(data):
 			# Find the first line in the file and split out based on the pipe delimeter
 			details = data[row_index + 1].split('|')
 			# Create a dictionary object to assign each of the values			
-			commit = {'revision': details[0].strip(), 'author': details[1].strip(), 'date': details[2].strip().split(' ')[0], 'time': details[2].strip().split(' ')[1], 'number of lines': details[3].strip().split(' ')[0], 'comment': data[row_index+2:data.index('',row_index+1)]}
+			commit = {'revision': details[0].strip(),
+			'author': details[1].strip(),
+			'date': details[2].strip().split(' ')[0],
+			'time': details[2].strip().split(' ')[1],
+			'number of lines': details[3].strip().split(' ')[0],
+			'comment': data[row_index+2:data.index('',row_index+1)]}
 
 			# Add the commit object to the commits array
 			commits.append(commit)
@@ -27,12 +32,29 @@ def get_commits(data):
 			break
 	return commits
 
-# Create an empty array for authors
+# Define a function to get the list of authors and their number of updates
+def get_authors(data):
+	authors = {}
+	for commit in commits:
+		author = commit['author']
+		if commit['author'] in authors:
+			authors[author] = authors[author] + 1
+		else:
+			authors[author] = 1
 
+	return authors
+ 
+def get_dates(data):
+	dates = {}
+	for commit in commits:
+		date = commit['date']
+		if commit['date'] in dates:
+			dates[date] = dates[date] + 1
+		else:
+			dates[date] = 1
 
-
-
-   
+	return dates
+ 
 if __name__ == '__main__':
 	# open the file - and read all of the lines.
 	changes_file = 'changes_python.log'
@@ -46,23 +68,9 @@ if __name__ == '__main__':
 	print 'There are:',number_of_commits,'commits in the file'
 
 	# Statistical conclusion #2: How many commits were there per author
-	authors = {}
-	for commit in commits:
-		author = commit['author']
-		if commit['author'] not in authors:
-			authors[author] = 1
-		else:
-			authors[author] = authors[author] + 1
-
-	print authors
+	authors = get_authors(data)
+	print 'The following is the list of authors and number of commits:\n',authors
 
 	# Statistical conclusion #3: How many commits were there per day
-	dates = {}
-	for commit in commits:
-		date = commit['date']
-		if commit['date'] not in dates:
-			dates[date] = 1
-		else:
-			dates[date] = dates[date] + 1
-
-	print dates
+	dates = get_dates(data)
+	print 'The following is the list of dates and number of commits:\n',dates
