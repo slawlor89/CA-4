@@ -1,5 +1,5 @@
 # Student number: 10354686
-# CA 4
+# CA 4 Programming for big data
 
 # Import the csv capability
 import csv
@@ -129,3 +129,4 @@ if __name__ == '__main__':
 		w = csv.DictWriter(f, dates.keys())
 		w.writeheader()
 		w.writerow(dates)
+		
